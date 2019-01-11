@@ -25,10 +25,11 @@ app.get("/api/hello", function (req, res) {
 });
 
 // app body
-app.use('/api/whoami', (req, res) => {
+app.use((req, res, next) => {
 	console.log(req.headers);
 	req.ipaddress = ((req.headers['x-forwarded-for']).split(','))[0];
 	res.json({ipaddress: req.ipaddress, language: req.headers['accept-language'], software: req.headers['user-agent']});
+	next();
 });
 
 // listen for requests :)
